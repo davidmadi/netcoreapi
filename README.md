@@ -1,0 +1,2 @@
+# netcoreapi
+sample netcore api
