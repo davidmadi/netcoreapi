@@ -1,0 +1,14 @@
+/Users/davidmadi/Dev/netcoreapi/bin/Debug/netcoreapp2.1/netcoreapi.deps.json
+/Users/davidmadi/Dev/netcoreapi/bin/Debug/netcoreapp2.1/netcoreapi.runtimeconfig.json
+/Users/davidmadi/Dev/netcoreapi/bin/Debug/netcoreapp2.1/netcoreapi.runtimeconfig.dev.json
+/Users/davidmadi/Dev/netcoreapi/bin/Debug/netcoreapp2.1/netcoreapi.dll
+/Users/davidmadi/Dev/netcoreapi/bin/Debug/netcoreapp2.1/netcoreapi.pdb
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.csprojAssemblyReference.cache
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.csproj.CoreCompileInputs.cache
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.RazorAssemblyInfo.cache
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.RazorAssemblyInfo.cs
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.AssemblyInfoInputs.cache
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.AssemblyInfo.cs
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.RazorTargetAssemblyInfo.cache
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.dll
+/Users/davidmadi/Dev/netcoreapi/obj/Debug/netcoreapp2.1/netcoreapi.pdb
