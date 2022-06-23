@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Weather;
 
-namespace FirstApi.Controllers.v1;
+namespace FirstApi.Controllers.v2;
 
 [ApiController]
-[Route("v1/api/weather")]
+[Route("v2/api/weather")]
 
 public class WeatherForecastController : ControllerBase
 {
@@ -19,8 +19,10 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("forecast")]   
     public IEnumerable<WeatherForecast> Get()
     {
-        var forecaster = ForecasterFactory.Build(WeatherVersion.v1);
+        var forecaster = ForecasterFactory.Build(WeatherVersion.v2);
         return forecaster.Get();
-    }    
+    }
+    
+    
     
 }
