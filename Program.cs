@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Version = "v1",
-            Title = "FirstApi",
+            Title = "SampleApi",
             Description = "A public api for everyone",
             Contact = new OpenApiContact
             {

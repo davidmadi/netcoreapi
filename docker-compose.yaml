@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  sample:
+    container_name: sample
+    image: sampleapi
+    ports:
+        - "7000:7000"
+    networks:
+        - net-sample-local
+
+networks:
+    net-sample-local:
+        driver: bridge        
