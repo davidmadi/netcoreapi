@@ -1,5 +1,5 @@
 using Weather;
-public static class ForecastorFactory {
+public static class ForecasterFactory {
 
   public static Forecaster Build(WeatherVersion version){
     switch(version){

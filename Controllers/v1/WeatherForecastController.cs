@@ -19,14 +19,14 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("v1/forecast")]   
     public IEnumerable<WeatherForecast> GetV1()
     {
-        var forecaster = ForecastorFactory.Build(WeatherVersion.v1);
+        var forecaster = ForecasterFactory.Build(WeatherVersion.v1);
         return forecaster.Get();
     }
     
     [HttpGet("v2/forecast")]   
     public IEnumerable<WeatherForecast> GetV2()
     {
-        var forecaster = ForecastorFactory.Build(WeatherVersion.v2);
+        var forecaster = ForecasterFactory.Build(WeatherVersion.v2);
         return forecaster.Get();
     }
     
