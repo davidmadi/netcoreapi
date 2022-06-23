@@ -4,7 +4,8 @@ using Weather;
 namespace FirstApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/weather")]
+
 public class WeatherForecastController : ControllerBase
 {
 
@@ -15,10 +16,20 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet("v1/forecast")]   
+    public IEnumerable<WeatherForecast> GetV1()
     {
-        var forecaster = ForecastorFactory.Build();
+        var forecaster = ForecastorFactory.Build(WeatherVersion.v1);
         return forecaster.Get();
     }
+    
+    [HttpGet("v2/forecast")]   
+    public IEnumerable<WeatherForecast> GetV2()
+    {
+        var forecaster = ForecastorFactory.Build(WeatherVersion.v2);
+        return forecaster.Get();
+    }
+    
+    
+    
 }
