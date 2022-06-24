@@ -5,10 +5,10 @@ services:
     container_name: sample
     image: sampleapi
     ports:
-        - "7000:7000"
+      - "8000:80"
     networks:
-        - net-sample-local
+      - net-sample-local
 
 networks:
-    net-sample-local:
-        driver: bridge        
+  net-sample-local:
+      driver: bridge        
