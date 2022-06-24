@@ -18,18 +18,38 @@ public class TaxCalculatorController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("calculator/{year}/{income}")]   
-    public Response<EffectiveTaxRate> Get(int year, float income)
+    [HttpGet("calculator/{year}/{income}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<Response<EffectiveTaxRate>> Get(int year, float income)
     {
-        return new Response<EffectiveTaxRate>(){
-            Result = new EffectiveTaxRate(){
-                Income = income,
-                Year = year,
-                Rate = 10
-            },
-            Success = true,
-            ReliabilityEnum = Reliability.Online
-        };
+        try {
+            var taxService = Library.Tax.Calculator.Factory.ByYear(year);
+            var taxRate = taxService.Calculate(income);
+            if (taxRate != null) {
+                return new Response<EffectiveTaxRate>(){
+                    Result = taxRate,
+                    Success = true,
+                    ReliabilityEnum = Reliability.Online
+                };
+            }
+            return NotFound(new Response<EffectiveTaxRate>(){
+                Success = false,
+                ReliabilityEnum = Reliability.Error
+            });
+        }
+        catch (ArgumentOutOfRangeException){
+            return NotFound(new Response<EffectiveTaxRate>(){
+                Success = false,
+                ReliabilityEnum = Reliability.Error
+            });
+        }
+        catch (Exception) {
+            return NotFound(new Response<EffectiveTaxRate>(){
+                Success = false,
+                ReliabilityEnum = Reliability.Error
+            });
+        }
     }    
     
 }

@@ -51,6 +51,8 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseExceptionHandler("/error");
+
 app.UseAuthorization();
 
 app.MapControllers();

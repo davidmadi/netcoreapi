@@ -2,5 +2,6 @@ namespace Library.Envelope;
 public enum Reliability
 {
   Online,
-  Cache
+  Cache,
+  Error
 }
