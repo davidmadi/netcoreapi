@@ -15,7 +15,7 @@ public class InterviewTestServer : TaxService
 
   public EffectiveTaxRate Calculate(float income)
   {
-
+    //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
     var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
     var stringTask = InterviewTestServer.client.GetStringAsync(url);
     stringTask.Wait();

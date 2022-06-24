@@ -9,6 +9,14 @@ services:
     networks:
       - net-sample-local
 
+  interview-test-server:
+    container_name: interview-test-server
+    image: ptsdocker16/interview-test-server
+    ports:
+      - "5001:5000"
+    networks:
+      - net-sample-local
+
 networks:
   net-sample-local:
-      driver: bridge        
+      driver: bridge
