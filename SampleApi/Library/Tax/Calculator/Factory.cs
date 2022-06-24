@@ -5,6 +5,7 @@ namespace Library.Tax.Calculator;
 public static class Factory {
 
   private static Dictionary<int, TaxService> hashYear = new Dictionary<int, TaxService>();
+
   static Factory(){
     hashYear[2019] = InterviewTestService.getInstance();
     hashYear[2020] = InterviewTestService.getInstance();

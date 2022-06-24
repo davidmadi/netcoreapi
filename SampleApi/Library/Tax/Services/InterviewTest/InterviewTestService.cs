@@ -5,8 +5,12 @@ using Library.Tax.Calculator.Services;
 
 public class InterviewTestService : TaxService
 {
+  private static InterviewTestService singleton;
   public static TaxService getInstance(){
-    return new InterviewTestService();
+    if (InterviewTestService.singleton == null){
+      InterviewTestService.singleton = new InterviewTestService();
+    }
+    return InterviewTestService.singleton;
   }
 
   public EffectiveTaxRate Calculate(float income, int year)
@@ -33,11 +37,6 @@ public class InterviewTestService : TaxService
       }
     }
     return null;
-  }
-
-  EffectiveTaxRate TaxService.Calculate(float income, int year)
-  {
-    throw new NotImplementedException();
   }
 
 }
