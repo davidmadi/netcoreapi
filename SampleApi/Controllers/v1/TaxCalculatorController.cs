@@ -25,7 +25,7 @@ public class TaxCalculatorController : ControllerBase
     {
         try {
             var taxService = Library.Tax.Calculator.Factory.ByYear(year);
-            var taxRate = taxService.Calculate(income);
+            var taxRate = taxService.Calculate(income, year);
             if (taxRate != null) {
                 return new Response<EffectiveTaxRate>(){
                     Result = taxRate,
