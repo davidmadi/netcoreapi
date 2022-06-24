@@ -33,16 +33,7 @@ public class TaxCalculatorController : ControllerBase
                     ReliabilityEnum = Reliability.Online
                 };
             }
-            return NotFound(new Response<EffectiveTaxRate>(){
-                Success = false,
-                ReliabilityEnum = Reliability.Error
-            });
-        }
-        catch (ArgumentOutOfRangeException){
-            return NotFound(new Response<EffectiveTaxRate>(){
-                Success = false,
-                ReliabilityEnum = Reliability.Error
-            });
+            throw new Exception();
         }
         catch (Exception) {
             return NotFound(new Response<EffectiveTaxRate>(){
