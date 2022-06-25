@@ -6,14 +6,14 @@ public static class MarginalTaxRateCalculator
   {
     var result = new MarginalTaxResult();
     var sorted = brackets.OrderBy(b => b.min).ToList();
-    var incomeBraket = MarginalTaxRateCalculator.FindInBracketBy(income, brackets);
+    var incomeBraket = MarginalTaxRateCalculator.FindBracketByIncome(income, brackets);
     if(incomeBraket != null) {
       result.incomeTaxes = incomeBraket.rate * income;
       if (raise > 0 && incomeBraket.max > 0) {
         decimal taxableWindow = incomeBraket.max.Value - income;
         result.windowToMaxTaxes = taxableWindow * incomeBraket.rate;
         decimal raiseTaxable = raise - taxableWindow;
-        var raiseBracket = MarginalTaxRateCalculator.FindInBracketBy(income+raise, brackets);
+        var raiseBracket = MarginalTaxRateCalculator.FindBracketByIncome(income+raise, brackets);
         if (raiseBracket != null) {
           result.raiseTaxes = raiseBracket.rate * raiseTaxable;
         }
@@ -26,7 +26,7 @@ public static class MarginalTaxRateCalculator
     return result;
   }
 
-  public static Bracket? FindInBracketBy(decimal amount, List<Bracket> bracketList) {
+  public static Bracket? FindBracketByIncome(decimal amount, List<Bracket> bracketList) {
     foreach(var bracket in bracketList) {
       if (bracket.min != null && bracket.max != null){
         if (bracket.min <= amount && amount < bracket.max){

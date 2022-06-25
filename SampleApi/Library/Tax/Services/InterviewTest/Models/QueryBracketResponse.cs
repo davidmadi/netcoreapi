@@ -9,3 +9,10 @@ public class QueryError {
   public string? code { get; set; }
   public string? message { get; set; }
 }
+
+public class Bracket {
+  public int? max { get; set; }
+  public int? min { get; set; }
+  public decimal rate {get;set;}
+
+}

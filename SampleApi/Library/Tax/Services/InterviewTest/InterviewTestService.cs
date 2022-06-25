@@ -14,7 +14,7 @@ public class InterviewTestService : TaxService
     return InterviewTestService.singleton;
   }
 
-  public QueryBracketResponse QueryOnline(int year) {
+  public QueryBracketResponse? QueryOnline(int year) {
     //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
     var url = "http://localhost:5001/tax-calculator/brackets/" + year;
     HttpClient client = new HttpClient();
