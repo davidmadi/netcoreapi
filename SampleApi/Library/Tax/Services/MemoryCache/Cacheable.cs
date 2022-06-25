@@ -18,17 +18,17 @@ public class Cacheable {
   public EffectiveTaxRate FetchTaxRate(decimal income, int year, bool withCache)
   {
     if (yearCache.ContainsKey(year) && withCache){
-      object? response = yearCache[year];
-      var rate = this.service.Calculate(income, year, response);
+      var cachedResult = yearCache[year];
+      var rate = this.service.Calculate(income, year, cachedResult);
       if(rate != null){
         rate.ReliabilityEnum = Reliability.Cache;
         return rate;
       }
     } else {
-      object? cachedQuery = this.service.QueryOnline(year);
-      if (cachedQuery != null) {
-        yearCache[year] = cachedQuery;
-        var rate = this.service.Calculate(income, year, cachedQuery);
+      var onlineResult = this.service.QueryOnline(year);
+      if (onlineResult != null) {
+        yearCache[year] = onlineResult;
+        var rate = this.service.Calculate(income, year, onlineResult);
         if(rate != null){
           rate.ReliabilityEnum = Reliability.Online;
           return rate;
