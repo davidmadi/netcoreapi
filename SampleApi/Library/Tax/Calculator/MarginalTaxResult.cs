@@ -2,7 +2,6 @@ namespace Library.Tax.Calculator
 {
   public class MarginalTaxResult
   {
-    internal decimal incomeTaxes;
     internal decimal raiseTaxes;
     internal decimal windowToMaxTaxes;
 
@@ -10,5 +9,6 @@ namespace Library.Tax.Calculator
     public decimal income{get;set;}
     public decimal raise{get;set;}
     public decimal marginalTaxes {get;set;}
+    public decimal incomeTaxes{get;set;}
   }
 }
