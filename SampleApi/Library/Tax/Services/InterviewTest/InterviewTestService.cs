@@ -13,22 +13,30 @@ public class InterviewTestService : TaxService
     return InterviewTestService.singleton;
   }
 
-  public EffectiveTaxRate? Calculate(float income, int year)
-  {
+  public object? QueryOnline(int year) {
     //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
     var url = "http://localhost:5001/tax-calculator/brackets/" + year;
     HttpClient client = new HttpClient();
     var stringTask = client.GetStringAsync(url);
     stringTask.Wait();
-    var response = JsonSerializer.Deserialize<IncomeResponse>(stringTask.Result);
-    if (response != null){
-      return InterviewTestService.Calculate(income, year, response);
+    IncomeResponse? response = JsonSerializer.Deserialize<IncomeResponse>(stringTask.Result);
+    if(response?.tax_brackets?.Count() > 0){
+      return response;
     }
-    throw new Exception("No result found on: " + url);
+    return null;
   }
 
-  public static EffectiveTaxRate? Calculate(float income, int year, IncomeResponse response){
-    var sorted = response.tax_brackets?.OrderBy((b) => b.min).ToList();
+  public EffectiveTaxRate? Calculate(float income, int year)
+  {
+    object? response = this.QueryOnline(year);
+    if (response != null){
+      return this.Calculate(income, year, response);
+    }
+    throw new Exception("No result found for year: " + year);
+  }
+
+  public EffectiveTaxRate? Calculate(float income, int year, object response){
+    var sorted = ((IncomeResponse)response).tax_brackets?.OrderBy((b) => b.min).ToList();
 
     if (sorted != null){
       foreach(var bracket in sorted) {

@@ -1,7 +1,6 @@
 using Library.Envelope;
 using Library.Tax.Calculator;
 using Microsoft.AspNetCore.Mvc;
-using Weather;
 
 namespace SampleApi.Controllers.v1;
 
@@ -25,20 +24,19 @@ public class TaxCalculatorController : ControllerBase
     {
         try {
             var taxService = Library.Tax.Calculator.Factory.ByYear(year);
-            var taxRate = taxService.Calculate(income, year);
+            var taxRate = taxService.FetchTaxRate(income, year);
             if (taxRate != null) {
                 return new Response<EffectiveTaxRate>(){
                     Result = taxRate,
-                    Success = true,
-                    ReliabilityEnum = Reliability.Online
+                    Success = true
                 };
             }
-            throw new Exception();
+            throw new Exception("Not found tax for this query");
         }
-        catch (Exception) {
+        catch (Exception e) {
             return NotFound(new Response<EffectiveTaxRate>(){
                 Success = false,
-                ReliabilityEnum = Reliability.Error
+                Message = e.Message
             });
         }
     }    
