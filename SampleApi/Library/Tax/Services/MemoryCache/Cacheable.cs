@@ -15,7 +15,7 @@ public class Cacheable {
     this.service = taxService;
   }
 
-  public EffectiveTaxRate? FetchTaxRate(float income, int year)
+  public EffectiveTaxRate? FetchTaxRate(decimal income, int year)
   {
     if (yearCache.ContainsKey(year)){
       object? response = yearCache[year];

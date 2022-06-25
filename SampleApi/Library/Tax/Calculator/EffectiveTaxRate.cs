@@ -3,8 +3,8 @@ using System.Text.Json.Serialization;
 using Library.Tax.Services;
 
 public class EffectiveTaxRate {
-  public float Income { get; set; }
-  public float Rate { get; set; }
+  public decimal Income { get; set; }
+  public decimal? Rate { get; set; }
   public int Year { get; set; }
 
   public string Reliability { 

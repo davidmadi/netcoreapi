@@ -20,7 +20,7 @@ public class TaxCalculatorController : ControllerBase
     [HttpGet("calculator/{year}/{income}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Response<EffectiveTaxRate>> Get(int year, float income)
+    public ActionResult<Response<EffectiveTaxRate>> Get(int year, decimal income)
     {
         try {
             var taxService = Library.Tax.Calculator.Factory.ByYear(year);
