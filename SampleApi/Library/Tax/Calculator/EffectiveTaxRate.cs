@@ -7,6 +7,7 @@ public class EffectiveTaxRate {
   public decimal? Rate { get; set; }
   public int Year { get; set; }
 
+  [JsonIgnore]
   public string Reliability { 
     get { return this.ReliabilityEnum.ToString(); }
   }

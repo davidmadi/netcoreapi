@@ -1,5 +1,6 @@
 using Library.Envelope;
 using Library.Tax.Calculator;
+using Library.Tax.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SampleApi.Controllers.v1;
@@ -23,15 +24,20 @@ public class TaxCalculatorController : ControllerBase
     public ActionResult<Response<EffectiveTaxRate>> Get(int year, decimal income)
     {
         try {
+            bool withCache = Request.Headers["Pragma"] != "no-cache" &&
+                Request.Headers["Cache-Control"] != "no-cache";
+
             var taxService = Library.Tax.Calculator.Factory.ByYear(year);
-            var taxRate = taxService.FetchTaxRate(income, year);
-            if (taxRate != null) {
-                return new Response<EffectiveTaxRate>(){
-                    Result = taxRate,
-                    Success = true
-                };
+            var taxRate = taxService.FetchTaxRate(income, year, withCache);
+                
+            if (taxRate.ReliabilityEnum == Reliability.Cache){
+                Response.Headers["Cache"] = "Hit";
             }
-            throw new Exception("Not found tax for this query");
+
+            return new Response<EffectiveTaxRate>(){
+                Result = taxRate,
+                Success = true
+            };
         }
         catch (Exception e) {
             return NotFound(new Response<EffectiveTaxRate>(){

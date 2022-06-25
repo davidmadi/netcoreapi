@@ -15,9 +15,9 @@ public class Cacheable {
     this.service = taxService;
   }
 
-  public EffectiveTaxRate? FetchTaxRate(decimal income, int year)
+  public EffectiveTaxRate FetchTaxRate(decimal income, int year, bool withCache)
   {
-    if (yearCache.ContainsKey(year)){
+    if (yearCache.ContainsKey(year) && withCache){
       object? response = yearCache[year];
       var rate = this.service.Calculate(income, year, response);
       if(rate != null){
@@ -35,6 +35,6 @@ public class Cacheable {
         }
       }
     }
-    return null;
+    throw new Exception("Not found tax for this query");
   }
 }
