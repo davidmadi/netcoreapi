@@ -8,9 +8,9 @@ public static class Factory {
   private static Dictionary<int, Cacheable> hashYear = new Dictionary<int, Cacheable>();
 
   static Factory(){
-    hashYear[2019] = new Cacheable(InterviewTestService.getInstance());
-    hashYear[2020] = new Cacheable(InterviewTestService.getInstance());
-    hashYear[2021] = new Cacheable(InterviewTestService.getInstance());
+    hashYear[2019] = new Cacheable(new InterviewTestService(2019));
+    hashYear[2020] = new Cacheable(new InterviewTestService(2020));
+    hashYear[2021] = new Cacheable(new InterviewTestService(2021));
   }
 
   public static Cacheable ByYear(int year) {

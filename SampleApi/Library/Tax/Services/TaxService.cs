@@ -2,7 +2,7 @@ namespace Library.Tax.Calculator.Services
 {
   public interface TaxService
   {
-    public QueryBracketResponse? QueryOnline(int year);
+    public QueryBracketResponse? QueryOnline();
   }
 
 }

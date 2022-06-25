@@ -20,7 +20,7 @@ public class Cacheable {
     if (yearCache.ContainsKey(year) && withCache){
       return yearCache[year].tax_brackets;
     } else {
-      var onlineResult = this.service.QueryOnline(year);
+      var onlineResult = this.service.QueryOnline();
       if (onlineResult != null) {
         yearCache[year] = onlineResult;
         return onlineResult.tax_brackets;

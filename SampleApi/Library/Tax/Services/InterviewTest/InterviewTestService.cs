@@ -6,17 +6,17 @@ using Library.Tax.Calculator.Services;
 
 public class InterviewTestService : TaxService
 {
-  private static InterviewTestService? singleton;
-  public static TaxService getInstance(){
-    if (InterviewTestService.singleton == null){
-      InterviewTestService.singleton = new InterviewTestService();
-    }
-    return InterviewTestService.singleton;
+  protected int year { get ; set; }
+
+  public InterviewTestService(int year) {
+    this.year = year;
   }
 
-  public QueryBracketResponse? QueryOnline(int year) {
+  public QueryBracketResponse? QueryOnline() {
+
+    //TODO: implement environment variable for dev url and live url
     //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
-    var url = "http://localhost:5001/tax-calculator/brackets/" + year;
+    var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
     HttpClient client = new HttpClient();
     var stringTask = client.GetStringAsync(url);
     stringTask.Wait();
@@ -35,4 +35,8 @@ public class InterviewTestService : TaxService
     return null;
   }
 
+  QueryBracketResponse? TaxService.QueryOnline()
+  {
+    throw new NotImplementedException();
+  }
 }
