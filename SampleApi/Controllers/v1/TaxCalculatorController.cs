@@ -18,29 +18,27 @@ public class TaxCalculatorController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("calculator/{year}/{income}")]
+    [HttpGet("marginalTaxCalculator/{year}/{income}/{raise}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Response<EffectiveTaxRate>> Get(int year, decimal income)
+    public ActionResult<Response<MarginalTaxResult>> Get(int year, decimal income, decimal raise)
     {
         try {
             bool withCache = Request.Headers["Pragma"] != "no-cache" &&
                 Request.Headers["Cache-Control"] != "no-cache";
 
             var taxService = Library.Tax.Calculator.Factory.ByYear(year);
-            var taxRate = taxService.FetchTaxRate(income, year, withCache);
-                
-            if (taxRate.ReliabilityEnum == Reliability.Cache){
-                Response.Headers["Cache"] = "Hit";
-            }
+            var brackets = taxService.FetchBrackets(year, withCache);
+            var result = MarginalTaxRateCalculator.Calculate(income, raise, brackets);
+            result.year = year;
 
-            return new Response<EffectiveTaxRate>(){
-                Result = taxRate,
+            return new Response<MarginalTaxResult>(){
+                Result = result,
                 Success = true
             };
         }
         catch (Exception e) {
-            return NotFound(new Response<EffectiveTaxRate>(){
+            return NotFound(new Response<MarginalTaxResult>(){
                 Success = false,
                 Message = e.Message
             });

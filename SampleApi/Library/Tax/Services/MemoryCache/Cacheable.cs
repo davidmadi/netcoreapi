@@ -6,7 +6,7 @@ using Library.Tax.Calculator.Services;
 public class Cacheable {
   TaxService service;
 
-  Dictionary<int, object> yearCache = new Dictionary<int, object>();
+  Dictionary<int, QueryBracketResponse> yearCache = new Dictionary<int, QueryBracketResponse>();
   //Dependency injection for cache
   public Cacheable(TaxService? taxService){
     if(taxService == null)
@@ -15,24 +15,15 @@ public class Cacheable {
     this.service = taxService;
   }
 
-  public EffectiveTaxRate FetchTaxRate(decimal income, int year, bool withCache)
+  public List<Bracket> FetchBrackets(int year, bool withCache)
   {
     if (yearCache.ContainsKey(year) && withCache){
-      var cachedResult = yearCache[year];
-      var rate = this.service.Calculate(income, year, cachedResult);
-      if(rate != null){
-        rate.ReliabilityEnum = Reliability.Cache;
-        return rate;
-      }
+      return yearCache[year].tax_brackets;
     } else {
       var onlineResult = this.service.QueryOnline(year);
       if (onlineResult != null) {
         yearCache[year] = onlineResult;
-        var rate = this.service.Calculate(income, year, onlineResult);
-        if(rate != null){
-          rate.ReliabilityEnum = Reliability.Online;
-          return rate;
-        }
+        return onlineResult.tax_brackets;
       }
     }
     throw new Exception("Not found tax for this query");

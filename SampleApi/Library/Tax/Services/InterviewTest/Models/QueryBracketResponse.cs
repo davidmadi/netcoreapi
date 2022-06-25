@@ -1,10 +1,10 @@
-public class IncomeResponse {
+public class QueryBracketResponse {
   public List<Bracket>? tax_brackets {get;set;}
 
-  public List<IncomeError>? errors {get;set;}
+  public List<QueryError>? errors {get;set;}
 }
 
-public class IncomeError {
+public class QueryError {
   public string? field { get; set; }
   public string? code { get; set; }
   public string? message { get; set; }

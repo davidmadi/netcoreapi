@@ -18,7 +18,7 @@ public static class Factory {
     if (hashYear.ContainsKey(year))
       return hashYear[year];
 
-    throw new ArgumentOutOfRangeException();
+    throw new ArgumentOutOfRangeException("Year " + year + " is not supported yet");
   }
 
 
