@@ -31,7 +31,7 @@ public class TaxCalculatorController : ControllerBase
             };
         }
         catch (Exception e) {
-            Library.Logging.LogManager.EnqueueException(e);
+            Library.Logging.LogManager.EnqueueException(e, null);
             return NotFound(new Response<MarginalTaxResult>(){
                 Success = false,
                 Message = e.Message

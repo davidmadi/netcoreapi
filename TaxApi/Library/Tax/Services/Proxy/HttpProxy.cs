@@ -4,7 +4,7 @@ using Library.Logging;
 
 public static class HttpProxy {
 
-  public static T? HttpJsonCall<T>(object? request, string url) {
+  public static T? HttpJsonCall<T>(object? request, string url, string source) {
 
     try
     {
@@ -18,14 +18,15 @@ public static class HttpProxy {
           JsonNumberHandling.WriteAsString
       };
 
-      LogManager.EnqueueTrace(request, stringTask.Result, null);
+      TraceManager.EnqueueTrace(request, stringTask.Result, null, source);
       if (stringTask.Result != null) {
         return JsonSerializer.Deserialize<T>(stringTask.Result, options);
       }
       return default(T);
     }
     catch(Exception e) {
-      LogManager.EnqueueTrace(request, null, e.ToString());
+      TraceManager.EnqueueTrace(request, null, e.ToString(), source);
+      LogManager.EnqueueException(e, source);
       return default(T);
     }
   }

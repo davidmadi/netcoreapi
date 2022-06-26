@@ -2,89 +2,47 @@ namespace Library.Logging;
 
 internal static class LogManager {
 
-  private static Queue<TraceRecord> traceQueue = new Queue<TraceRecord>();
   private static Queue<LogRecord> logQueue = new Queue<LogRecord>();
-  private static System.Timers.Timer traceTimer;
-  private static System.Timers.Timer logTimer;
 
   static LogManager() {
-    traceTimer = new System.Timers.Timer(5000);
-    traceTimer.Elapsed += OnTraceEvent;
-    traceTimer.AutoReset = true;
-    traceTimer.Enabled = true;
-
-    logTimer = new System.Timers.Timer(2500);
-    logTimer.Elapsed += OnLogEvent;
-    logTimer.AutoReset = true;
-    logTimer.Enabled = true;
+    Thread thread = new Thread(new ThreadStart(AsyncLogSave));
+    thread.Start();
   }
 
-  private static void OnTraceEvent(Object source, System.Timers.ElapsedEventArgs e)
+  private static void AsyncLogSave()
   {
-    int count = 0;
-    TraceRecord? record;
-    if (count < 10 && traceQueue.TryDequeue(out record)){
-      //Insert record in DB
-      //Deserialize
-      Console.WriteLine();
-      Console.ForegroundColor = ConsoleColor.Green;
-      if(record.Request != null){
-        Console.Write(record.Created.ToString() + "|" + record.Request + "|");
+    while (true) {
+      int count = 0;
+      LogRecord? record;
+      if (count < 10 && logQueue.TryDequeue(out record)){
+        //Insert record in DB
+        //Deserialize
+        var sb = new System.Text.StringBuilder();
+        sb.Append("[LOG] - " + record.Created.ToString());
+        if(record.Source != null){
+          sb.Append("|" + record.Source);
+        }
+        if(record.LogType != null){
+          sb.Append("|" + record.LogType);
+        }
+        if(record.Message != null){
+          sb.Append("|" + record.Message);
+        }
+        if(record.Context != null){
+          sb.Append("|" + record.Context);
+        }
+        Console.WriteLine(sb.ToString());
+        count++;
       }
-      if(record.Response != null){
-        Console.Write(record.Created.ToString() + "|" + record.Response + "|");
-      }
-      if(record.Error != null){
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.Write(record.Created.ToString() + "|" + record.Error + "|");
-      }
-      count++;
-    }
-  }
-
-  private static void OnLogEvent(Object source, System.Timers.ElapsedEventArgs e)
-  {
-    int count = 0;
-    LogRecord? record;
-    if (count < 10 && logQueue.TryDequeue(out record)){
-      //Insert record in DB
-      //Deserialize
-      Console.WriteLine();
-      Console.ForegroundColor = ConsoleColor.Green;
-      if(record.LogType != null){
-        Console.Write(record.Created.ToString() + "|" + record.LogType + "|");
-      }
-      if(record.Message != null){
-        Console.Write(record.Created.ToString() + "|" + record.Message + "|");
-      }
-      if(record.Context != null){
-        Console.Write(record.Created.ToString() + "|" + record.Context + "|");
-      }
-      count++;
+      Thread.Sleep(5000);
     }
   }  
 
-  public static void EnqueueTrace(object? request, object? response, string? error) {
-    //Table
-    //Id PK
-    //Request varchar
-    //Response varchar
-    //Error varchar
-    //Created datetime
-    //TODO: 
-    traceQueue.Enqueue(new TraceRecord(){
-      Request = request,
-      Response = response,
-      Error = error,
-      Created = DateTime.Now
-    });
+  public static void EnqueueException(Exception e, string? source) {
+    EnqueueLog("Exception", e.Message, e.StackTrace?.ToString(), source);
   }
 
-  public static void EnqueueException(Exception e) {
-    EnqueueLog("Exception", e.Message, e.StackTrace?.ToString());
-  }
-
-  public static void EnqueueLog(string? logType, object? message, string? context) {
+  public static void EnqueueLog(string? logType, object? message, string? context, string? source) {
     //Table
     //Id PK
     //Request varchar
@@ -96,18 +54,10 @@ internal static class LogManager {
       LogType = logType,
       Message = message,
       Context = context,
+      Source = source,
       Created = DateTime.Now
     });
   }  
-}
-
-internal class TraceRecord {
-
-  public object? Request { get; set; } 
-  public object? Response { get; set; }
-  public object? Error { get; set; }
-  public DateTime Created { get; set; }
-
 }
 
 internal class LogRecord {
@@ -116,5 +66,5 @@ internal class LogRecord {
   public object? Message { get; set; } 
   public object? Context { get; set; }
   public DateTime Created { get; set; }
-
+  public string? Source { get; set; }
 }
