@@ -13,14 +13,20 @@ public class InterviewTestService : TaxService
 
   public QueryBracketResponse? QueryOnline() {
 
-    //TODO: implement environment variable for dev url and live url
-    var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
-    //var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
+    try{
+      //TODO: implement environment variable for dev url and live url
+      var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
+      //var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
 
-    var response = HttpProxy.HttpJsonCall<QueryBracketResponse>(null, url, "InterviewTestServer");
-    if(response?.tax_brackets?.Count() > 0){
-      return response;
+      var response = HttpProxy.HttpJsonCall<QueryBracketResponse>(url, url, "interview-test-server");
+      if(response?.tax_brackets?.Count() > 0){
+        return response;
+      }
+      return null;
     }
-    return null;
+    catch (Exception e) {
+      Library.Logging.LogManager.EnqueueException(e, "InterviewTestService");
+      return null;
+    }
   }
 }

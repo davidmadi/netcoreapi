@@ -1,6 +1,4 @@
 namespace Library.Tax.MemoryCache;
-
-using Library.Tax.Calculator;
 using Library.Tax.Calculator.Services;
 
 public class Cacheable {
@@ -26,6 +24,6 @@ public class Cacheable {
         return onlineResult.tax_brackets;
       }
     }
-    throw new Exception("Not found tax for this query");
+    throw new Exception("Not found tax for this query: " + year);
   }
 }
