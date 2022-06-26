@@ -28,7 +28,7 @@ http://localhost:8000/index.html
 ## Unit test
 
 ```
-netcore test
+dotnet test
 ```
 
 # Improvements
