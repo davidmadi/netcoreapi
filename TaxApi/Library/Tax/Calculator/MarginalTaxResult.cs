@@ -1,6 +1,6 @@
 namespace Library.Tax.Calculator
 {
-  public class MarginalTaxResult
+  public class IncomeTaxResult
   {
     internal decimal raiseTaxes;
     internal decimal maxThresholdPayableAmount;

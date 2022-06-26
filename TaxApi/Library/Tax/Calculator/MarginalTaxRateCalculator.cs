@@ -2,9 +2,9 @@ namespace Library.Tax.Calculator;
 
 public static class MarginalTaxRateCalculator
 {
-  public static MarginalTaxResult Calculate(decimal income, decimal raise, List<Bracket> brackets)
+  public static IncomeTaxResult Calculate(decimal income, decimal raise, List<Bracket> brackets)
   {
-    var result = new MarginalTaxResult();
+    var result = new IncomeTaxResult();
     var sorted = brackets.OrderBy(b => b.min).ToList();
     var incomeBraket = MarginalTaxRateCalculator.FindBracketByIncome(income, brackets);
     if(incomeBraket != null) {

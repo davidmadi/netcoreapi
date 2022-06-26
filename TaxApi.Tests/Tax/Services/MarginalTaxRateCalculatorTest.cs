@@ -65,10 +65,10 @@ public class MarginalTaxRateCalculatorTest {
   {
     decimal income = 50000;
     decimal raise = 10000;
-    var marginalTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
+    var incomeTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
 
-    Assert.NotNull(marginalTaxResult);
-    Assert.Equal(marginalTaxResult.marginalTaxPayableAmount, 2000m);
+    Assert.NotNull(incomeTaxResult);
+    Assert.Equal(incomeTaxResult.marginalTaxPayableAmount, 2000m);
   }
 
   [Fact]
@@ -76,10 +76,10 @@ public class MarginalTaxRateCalculatorTest {
   {
     decimal income = 50000;
     decimal raise = 15000;
-    var marginalTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
+    var incomeTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
 
-    Assert.NotNull(marginalTaxResult);
-    Assert.Equal(marginalTaxResult.marginalTaxPayableAmount, 3500m);
+    Assert.NotNull(incomeTaxResult);
+    Assert.Equal(incomeTaxResult.marginalTaxPayableAmount, 3500m);
   }
 
   [Fact]
@@ -87,10 +87,10 @@ public class MarginalTaxRateCalculatorTest {
   {
     decimal income = 80000;
     decimal raise = 10000;
-    var marginalTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
+    var incomeTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.MockBrackets());
 
-    Assert.NotNull(marginalTaxResult);
-    Assert.Equal(marginalTaxResult.marginalTaxPayableAmount, 0);
+    Assert.NotNull(incomeTaxResult);
+    Assert.Equal(incomeTaxResult.marginalTaxPayableAmount, 0);
   }
 
 
@@ -99,10 +99,10 @@ public class MarginalTaxRateCalculatorTest {
   {
     decimal income = 80000;
     decimal raise = 10000;
-    var marginalTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.NoMaxMockBrackets());
+    var incomeTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, this.NoMaxMockBrackets());
 
-    Assert.NotNull(marginalTaxResult);
-    Assert.Equal(marginalTaxResult.marginalTaxPayableAmount, 3000);
+    Assert.NotNull(incomeTaxResult);
+    Assert.Equal(incomeTaxResult.marginalTaxPayableAmount, 3000);
   }
 
 }
