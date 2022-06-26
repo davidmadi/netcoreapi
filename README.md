@@ -54,3 +54,10 @@ netcore test
 3. Handle exceptions
 4. Enqueue trace record
 ![Logging image](/Documentation/HttpProxy.jpg)
+
+### 4. Improvements - Distributed cache
+1. Api Controller receives request
+2. Factory create/get service
+3. Service get from Redis cache or search online
+4. Calculator receives brackets and execute calculation
+![Improvement image](/Documentation/Improvement.jpg)
