@@ -1,25 +1,25 @@
 # Tax api built with netcore (net6.0)
 ## Installation
-Step 1
+1 - Remove obj folder if exists
 <br/>
-Remove obj folder if exists
 ```
 rm -rf ./TaxApi/obj
 ```
-Step 2
+2 - Install dependencies
 <br/>
-Install dependencies
 ```
 docker pull ptsdocker16/interview-test-server
 ```
-Step 3
+3 - Create api image
 ```
 docker build -t taxapi ./TaxApi
+```
+4 - Start docker
+```
 docker-compose up
 ```
-
-Step 4
-### Open browser
+5 - Open swagger url
+<br/>
 http://localhost:8000/index.html
 
 <br/>
@@ -30,3 +30,27 @@ http://localhost:8000/index.html
 ```
 netcore test
 ```
+
+# Documentation
+
+### 1. Endpoint scalable cache service
+1. Api Controller receives request
+2. Factory create/get service
+3. Service get from cache or search online, returns brackets
+4. Calculator receives brackets and execute calculation
+![Endpoing image](/Documentation/Endpoint.jpg)
+<br/>
+
+### 2. Async Logging / Tracing
+1. LogManager receives enqueue
+2. Enqueue record in memory
+3. Async timer dequeue record
+4. Timer saves record in database
+![Logging image](/Documentation/Logging.jpg)
+
+### 3. Http proxy trace
+1. Http proxy receives request
+2. Call http method
+3. Handle exceptions
+4. Enqueue trace record
+![Logging image](/Documentation/HttpProxy.jpg)
