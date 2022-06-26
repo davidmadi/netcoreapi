@@ -9,9 +9,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/SampleApi/bin/Debug/net6.0/SampleApi.dll",
+      "program": "${workspaceFolder}/TaxApi/bin/Debug/net6.0/TaxApi.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/SampleApi",
+      "cwd": "${workspaceFolder}/TaxApi",
       "stopAtEntry": false,
       "serverReadyAction": {
         "action": "openExternally",

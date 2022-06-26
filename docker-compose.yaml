@@ -1,13 +1,13 @@
 version: "3.7"
 
 services:
-  sample:
-    container_name: sample
-    image: sampleapi
+  taxapi:
+    container_name: taxapi
+    image: taxapi
     ports:
       - "8000:80"
     networks:
-      - net-sample-local
+      - net-local
 
   interview-test-server:
     container_name: interview-test-server
@@ -15,8 +15,8 @@ services:
     ports:
       - "5001:5000"
     networks:
-      - net-sample-local
+      - net-local
 
 networks:
-  net-sample-local:
+  net-local:
       driver: bridge

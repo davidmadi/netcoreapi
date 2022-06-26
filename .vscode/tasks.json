@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/SampleApi/SampleApi.csproj",
+        "${workspaceFolder}/TaxApi/TaxApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -19,7 +19,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/SampleApi/SampleApi.csproj",
+        "${workspaceFolder}/TaxApi/TaxApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/SampleApi/SampleApi.csproj"
+        "${workspaceFolder}/TaxApi/TaxApi.csproj"
       ],
       "problemMatcher": "$msCompile"
     }

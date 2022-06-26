@@ -1,6 +1,6 @@
 using Library.Tax.Calculator;
 
-namespace SampleApi.Tests.Tax.Services;
+namespace TaxApi.Tests.Tax.Services;
 
 public class MarginalTaxRateCalculatorTest {
 
