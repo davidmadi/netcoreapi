@@ -31,6 +31,10 @@ http://localhost:8000/index.html
 netcore test
 ```
 
+# Improvements
+1. Environment variable to call interview server url (local/container)
+2. SQL Database to store traces and logs
+
 # Documentation
 
 ### 1. Endpoint scalable cache service

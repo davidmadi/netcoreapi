@@ -3,8 +3,6 @@ namespace Library.Logging;
 internal static class TraceManager {
 
   private static Queue<TraceRecord> traceQueue = new Queue<TraceRecord>();
-  private static System.Timers.Timer traceTimer;
-
   static TraceManager() {
 
     Thread thread = new Thread(new ThreadStart(AsyncTraceSave));
