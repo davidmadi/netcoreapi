@@ -8,22 +8,28 @@ public static class MarginalTaxRateCalculator
     var sorted = brackets.OrderBy(b => b.min).ToList();
     var incomeBraket = MarginalTaxRateCalculator.FindBracketByIncome(income, brackets);
     if(incomeBraket != null) {
-      result.incomeTaxes = incomeBraket.rate * income;
+      result.incomeTaxPayableAmount = ApplyRateToAmount(incomeBraket.rate, income);
       if (raise > 0 && incomeBraket.max > 0) {
         decimal taxableWindow = incomeBraket.max.Value - income;
-        result.windowToMaxTaxes = taxableWindow * incomeBraket.rate;
+        result.maxThresholdPayableAmount = ApplyRateToAmount(incomeBraket.rate, taxableWindow);
         decimal raiseTaxable = raise - taxableWindow;
         var raiseBracket = MarginalTaxRateCalculator.FindBracketByIncome(income+raise, brackets);
         if (raiseBracket != null) {
-          result.raiseTaxes = raiseBracket.rate * raiseTaxable;
+          result.raiseTaxes = ApplyRateToAmount(raiseBracket.rate, raiseTaxable);
         }
+      } else {
+        result.raiseTaxes = ApplyRateToAmount(raise, incomeBraket.rate);
       }
     }
-    result.marginalTaxes = Math.Round(result.windowToMaxTaxes + result.raiseTaxes, 2);
+    result.marginalTaxPayableAmount = Math.Round(result.maxThresholdPayableAmount + result.raiseTaxes, 2);
     result.income = income;
     result.raise = raise;
 
     return result;
+  }
+
+  private static decimal ApplyRateToAmount(decimal rate, decimal amount) {
+    return Math.Round(rate * amount, 2);
   }
 
   public static Bracket? FindBracketByIncome(decimal amount, List<Bracket> bracketList) {

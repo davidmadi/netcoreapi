@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Library.Logging;
 
-public abstract class Proxy {
+public static class HttpProxy {
 
-  protected T? HttpJsonCall<T>(object? request, string url) {
+  public static T? HttpJsonCall<T>(object? request, string url) {
 
     try
     {
@@ -22,9 +22,7 @@ public abstract class Proxy {
       if (stringTask.Result != null) {
         return JsonSerializer.Deserialize<T>(stringTask.Result, options);
       }
-      else {
-        return default(T);
-      }
+      return default(T);
     }
     catch(Exception e) {
       LogManager.EnqueueTrace(request, null, e.ToString());

@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Library.Tax.Calculator.Services;
 
-public class InterviewTestService : Proxy, TaxService
+public class InterviewTestService : TaxService
 {
   protected int year { get ; set; }
 
@@ -17,7 +17,7 @@ public class InterviewTestService : Proxy, TaxService
     //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
     var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
 
-    var response = this.HttpJsonCall<QueryBracketResponse>(null, url);
+    var response = HttpProxy.HttpJsonCall<QueryBracketResponse>(null, url);
     if(response?.tax_brackets?.Count() > 0){
       return response;
     }

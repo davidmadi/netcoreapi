@@ -5,18 +5,18 @@ namespace Library.Tax.Calculator;
 
 public static class Factory {
 
-  private static Dictionary<int, Cacheable> hashYear = new Dictionary<int, Cacheable>();
+  private static Dictionary<int, Cacheable> singletonHashServices = new Dictionary<int, Cacheable>();
 
   static Factory(){
-    hashYear[2019] = new Cacheable(new InterviewTestService(2019));
-    hashYear[2020] = new Cacheable(new InterviewTestService(2020));
-    hashYear[2021] = new Cacheable(new InterviewTestService(2021));
+    singletonHashServices[2019] = new Cacheable(new InterviewTestService(2019));
+    singletonHashServices[2020] = new Cacheable(new InterviewTestService(2020));
+    singletonHashServices[2021] = new Cacheable(new InterviewTestService(2021));
   }
 
   public static Cacheable GetTaxServiceBy(int year) {
 
-    if (hashYear.ContainsKey(year))
-      return hashYear[year];
+    if (singletonHashServices.ContainsKey(year))
+      return singletonHashServices[year];
 
     throw new ArgumentOutOfRangeException("Year " + year + " is not supported yet");
   }
