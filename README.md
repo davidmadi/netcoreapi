@@ -34,6 +34,7 @@ netcore test
 # Improvements
 1. Environment variable to call interview server url (local/container)
 2. SQL Database to store traces and logs
+3. Distributed Redis cache to be usable for more containers
 
 # Documentation
 
