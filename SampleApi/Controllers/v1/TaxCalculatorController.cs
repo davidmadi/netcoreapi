@@ -1,6 +1,5 @@
 using Library.Envelope;
 using Library.Tax.Calculator;
-using Library.Tax.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SampleApi.Controllers.v1;
@@ -10,14 +9,6 @@ namespace SampleApi.Controllers.v1;
 
 public class TaxCalculatorController : ControllerBase
 {
-
-    private readonly ILogger<TaxCalculatorController> _logger;
-
-    public TaxCalculatorController(ILogger<TaxCalculatorController> logger)
-    {
-        _logger = logger;
-    }
-
     [HttpGet("marginalTaxCalculator/{year}/{income}/{raise}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -27,17 +18,18 @@ public class TaxCalculatorController : ControllerBase
             bool withCache = Request.Headers["Pragma"] != "no-cache" &&
                 Request.Headers["Cache-Control"] != "no-cache";
 
-            var taxService = Library.Tax.Calculator.Factory.ByYear(year);
+            var taxService = Library.Tax.Calculator.Factory.GetTaxServiceBy(year);
             var brackets = taxService.FetchBrackets(year, withCache);
-            var result = MarginalTaxRateCalculator.Calculate(income, raise, brackets);
-            result.year = year;
+            var marginalTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, brackets);
+            marginalTaxResult.year = year;
 
             return new Response<MarginalTaxResult>(){
-                Result = result,
+                Result = marginalTaxResult,
                 Success = true
             };
         }
         catch (Exception e) {
+            Library.Logging.LogManager.EnqueueException(e);
             return NotFound(new Response<MarginalTaxResult>(){
                 Success = false,
                 Message = e.Message

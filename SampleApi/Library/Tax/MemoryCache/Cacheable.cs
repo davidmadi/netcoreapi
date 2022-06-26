@@ -1,4 +1,4 @@
-namespace Library.Tax.Services.MemoryCache;
+namespace Library.Tax.MemoryCache;
 
 using Library.Tax.Calculator;
 using Library.Tax.Calculator.Services;

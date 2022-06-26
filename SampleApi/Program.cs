@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,26 +16,37 @@ builder.Services.AddApiVersioning(options =>
 
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        options.SwaggerDoc("v1", new OpenApiInfo
+        Version = "v1",
+        Title = "SampleApi",
+        Description = "A public api for everyone",
+        Contact = new OpenApiContact
         {
-            Version = "v1",
-            Title = "SampleApi",
-            Description = "A public api for everyone",
-            Contact = new OpenApiContact
-            {
-                Name = "Example Contact",
-                Url = new Uri("https://example.com/contact")
-            },
-            License = new OpenApiLicense
-            {
-                Name = "Example License",
-                Url = new Uri("https://example.com/license")
-            }
-        });
+            Name = "Example Contact",
+            Url = new Uri("https://example.com/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Example License",
+            Url = new Uri("https://example.com/license")
+        }
     });
+});
+
+
+// builder.Services.AddHttpLogging(logging =>
+// {
+//     logging.LoggingFields = HttpLoggingFields.All;
+//     logging.RequestHeaders.Add("verbose");
+//     logging.ResponseHeaders.Add("verbose");
+//     logging.RequestBodyLogLimit = 4096;
+//     logging.ResponseBodyLogLimit = 4096;
+// });
 
 var app = builder.Build();
+app.UseHttpLogging();
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())

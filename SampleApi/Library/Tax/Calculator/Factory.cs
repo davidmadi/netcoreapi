@@ -1,5 +1,5 @@
 using Library.Tax.Calculator.Services;
-using Library.Tax.Services.MemoryCache;
+using Library.Tax.MemoryCache;
 
 namespace Library.Tax.Calculator;
 
@@ -13,7 +13,7 @@ public static class Factory {
     hashYear[2021] = new Cacheable(new InterviewTestService(2021));
   }
 
-  public static Cacheable ByYear(int year) {
+  public static Cacheable GetTaxServiceBy(int year) {
 
     if (hashYear.ContainsKey(year))
       return hashYear[year];
