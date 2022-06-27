@@ -22,7 +22,7 @@ public class TaxCalculatorController : ControllerBase
 
             var taxService = Library.Tax.Calculator.Factory.GetTaxServiceBy(year);
             var brackets = taxService.FetchBrackets(year, withCache);
-            var incomeTaxResult = MarginalTaxRateCalculator.Calculate(income, raise, brackets);
+            var incomeTaxResult = IncomeTaxCalculator.Calculate(income, raise, brackets);
             incomeTaxResult.year = year;
 
             return new Response<IncomeTaxResult>(){

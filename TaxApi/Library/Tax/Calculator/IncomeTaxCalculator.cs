@@ -1,19 +1,19 @@
 namespace Library.Tax.Calculator;
 
-public static class MarginalTaxRateCalculator
+public static class IncomeTaxCalculator
 {
   public static IncomeTaxResult Calculate(decimal income, decimal raise, List<Bracket> brackets)
   {
     var result = new IncomeTaxResult();
     var sorted = brackets.OrderBy(b => b.min).ToList();
-    var incomeBraket = MarginalTaxRateCalculator.FindBracketByIncome(income, brackets);
+    var incomeBraket = IncomeTaxCalculator.FindBracketByIncome(income, brackets);
     if(incomeBraket != null) {
       result.incomeTaxPayableAmount = ApplyRateToAmount(incomeBraket.rate, income);
       if (raise > 0 && incomeBraket.max > 0) {
         decimal taxableWindow = incomeBraket.max.Value - income;
         result.maxThresholdPayableAmount = ApplyRateToAmount(incomeBraket.rate, taxableWindow);
         decimal raiseTaxable = raise - taxableWindow;
-        var raiseBracket = MarginalTaxRateCalculator.FindBracketByIncome(income+raise, brackets);
+        var raiseBracket = IncomeTaxCalculator.FindBracketByIncome(income+raise, brackets);
         if (raiseBracket != null) {
           result.raiseTaxes = ApplyRateToAmount(raiseBracket.rate, raiseTaxable);
         }
