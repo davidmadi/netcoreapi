@@ -43,7 +43,7 @@ dotnet test
 2. Factory create/get service
 3. Service get from cache or search online, returns brackets
 4. Calculator receives brackets and execute calculation
-![Endpoing image](/Documentation/Endpoint1.jpg)
+![Endpoing image](/Documentation/Endpoint2.jpg)
 <br/>
 
 ### 2. Async Logging / Tracing
@@ -65,4 +65,4 @@ dotnet test
 2. Factory create/get service
 3. Service get from Redis cache or search online
 4. Calculator receives brackets and execute calculation
-![Improvement image](/Documentation/Improvement1.jpg)
+![Improvement image](/Documentation/Improvement2.jpg)
