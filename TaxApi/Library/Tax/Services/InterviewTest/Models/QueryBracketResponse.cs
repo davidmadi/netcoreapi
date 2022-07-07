@@ -15,4 +15,8 @@ public class Bracket {
   public int? min { get; set; }
   public decimal rate {get;set;}
 
+  public decimal Min(){
+    return (this.min.HasValue) ? this.min.Value : 0m;
+  }
+
 }

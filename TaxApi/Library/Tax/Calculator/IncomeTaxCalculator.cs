@@ -2,33 +2,30 @@ namespace Library.Tax.Calculator;
 
 public static class IncomeTaxCalculator
 {
-  public static IncomeTaxResult Calculate(int year, decimal income, decimal raise, List<Bracket> brackets)
+  public static IncomeTaxResult Calculate(int year, decimal income, List<Bracket> brackets)
   {
-    var result = new IncomeTaxResult(year);
+    var result = new IncomeTaxResult(year, income);
     var sorted = brackets.OrderBy(b => b.min).ToList();
-    var incomeBracket = IncomeTaxCalculator.FindBracketByIncome(income, brackets);
-    if(incomeBracket != null) {
-      result.incomeTaxPayableAmount = ApplyRateToAmount(incomeBracket.rate, income);
 
-      if (raise > 0) {
-        if(incomeBracket.max > 0){
-          decimal thresholdTaxableWindow = incomeBracket.max.Value - income;
-          result.thresholdPayableAmount = ApplyRateToAmount(incomeBracket.rate, thresholdTaxableWindow);
-
-          decimal raiseTaxable = raise - thresholdTaxableWindow;
-          var raiseBracket = IncomeTaxCalculator.FindBracketByIncome(income+raise, brackets);
-          if (raiseBracket != null) {
-            result.raiseTaxes = ApplyRateToAmount(raiseBracket.rate, raiseTaxable);
-          }
+    decimal remainingIncome = income;
+    foreach(var currentBracked in sorted)
+    {
+      if (currentBracked.max > 0)
+      {
+        decimal taxable = currentBracked.max.Value - currentBracked.Min();
+        if(remainingIncome > taxable){
+          remainingIncome -= taxable;
         } else {
-          result.raiseTaxes = ApplyRateToAmount(raise, incomeBracket.rate);
+          taxable = remainingIncome;
         }
+        
+        //remove taxable from income
+        result.incomeTaxPayableAmount += ApplyRateToAmount(currentBracked.rate, taxable);
+      } else {
+        result.incomeTaxPayableAmount += ApplyRateToAmount(currentBracked.rate, remainingIncome);
       }
+      if (remainingIncome <= 0) break;
     }
-
-    result.marginalTaxPayableAmount = Math.Round(result.thresholdPayableAmount + result.raiseTaxes, 2);
-    result.income = income;
-    result.raise = raise;
 
     return result;
   }

@@ -11,10 +11,10 @@ namespace TaxApi.Controllers.v1;
 
 public class TaxCalculatorController : ControllerBase
 {
-    [HttpGet("calculator/{year}/{income}/{raise}")]
+    [HttpGet("calculator/{year}/{income}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Response<IncomeTaxResult>> Get(int year, decimal income, decimal raise)
+    public ActionResult<Response<IncomeTaxResult>> Get(int year, decimal income)
     {
         try {
             bool withCache = Request.Headers["Pragma"] != "no-cache" &&
@@ -22,7 +22,7 @@ public class TaxCalculatorController : ControllerBase
 
             var taxService = Library.Tax.Calculator.Factory.GetTaxServiceBy(year);
             var brackets = taxService.FetchBrackets(year, withCache);
-            var incomeTaxResult = IncomeTaxCalculator.Calculate(year ,income, raise, brackets);
+            var incomeTaxResult = IncomeTaxCalculator.Calculate(year ,income, brackets);
 
             return new Response<IncomeTaxResult>(){
                 Result = incomeTaxResult,

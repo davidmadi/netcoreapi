@@ -2,16 +2,13 @@ namespace Library.Tax.Calculator
 {
   public class IncomeTaxResult
   {
-    public IncomeTaxResult(int year){
+    public IncomeTaxResult(int year, decimal income){
       this.year = year;
+      this.income = income;
     }
-    internal decimal raiseTaxes;
-    internal decimal thresholdPayableAmount;
 
     public decimal year{get;set;}
     public decimal income{get;set;}
-    public decimal raise{get;set;}
-    public decimal marginalTaxPayableAmount {get;set;}
     public decimal incomeTaxPayableAmount{get;set;}
   }
 }
