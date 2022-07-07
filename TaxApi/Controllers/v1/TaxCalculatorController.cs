@@ -22,8 +22,7 @@ public class TaxCalculatorController : ControllerBase
 
             var taxService = Library.Tax.Calculator.Factory.GetTaxServiceBy(year);
             var brackets = taxService.FetchBrackets(year, withCache);
-            var incomeTaxResult = IncomeTaxCalculator.Calculate(income, raise, brackets);
-            incomeTaxResult.year = year;
+            var incomeTaxResult = IncomeTaxCalculator.Calculate(year ,income, raise, brackets);
 
             return new Response<IncomeTaxResult>(){
                 Result = incomeTaxResult,

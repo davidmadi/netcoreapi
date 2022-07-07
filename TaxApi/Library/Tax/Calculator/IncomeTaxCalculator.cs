@@ -2,26 +2,31 @@ namespace Library.Tax.Calculator;
 
 public static class IncomeTaxCalculator
 {
-  public static IncomeTaxResult Calculate(decimal income, decimal raise, List<Bracket> brackets)
+  public static IncomeTaxResult Calculate(int year, decimal income, decimal raise, List<Bracket> brackets)
   {
-    var result = new IncomeTaxResult();
+    var result = new IncomeTaxResult(year);
     var sorted = brackets.OrderBy(b => b.min).ToList();
-    var incomeBraket = IncomeTaxCalculator.FindBracketByIncome(income, brackets);
-    if(incomeBraket != null) {
-      result.incomeTaxPayableAmount = ApplyRateToAmount(incomeBraket.rate, income);
-      if (raise > 0 && incomeBraket.max > 0) {
-        decimal taxableWindow = incomeBraket.max.Value - income;
-        result.maxThresholdPayableAmount = ApplyRateToAmount(incomeBraket.rate, taxableWindow);
-        decimal raiseTaxable = raise - taxableWindow;
-        var raiseBracket = IncomeTaxCalculator.FindBracketByIncome(income+raise, brackets);
-        if (raiseBracket != null) {
-          result.raiseTaxes = ApplyRateToAmount(raiseBracket.rate, raiseTaxable);
+    var incomeBracket = IncomeTaxCalculator.FindBracketByIncome(income, brackets);
+    if(incomeBracket != null) {
+      result.incomeTaxPayableAmount = ApplyRateToAmount(incomeBracket.rate, income);
+
+      if (raise > 0) {
+        if(incomeBracket.max > 0){
+          decimal thresholdTaxableWindow = incomeBracket.max.Value - income;
+          result.thresholdPayableAmount = ApplyRateToAmount(incomeBracket.rate, thresholdTaxableWindow);
+
+          decimal raiseTaxable = raise - thresholdTaxableWindow;
+          var raiseBracket = IncomeTaxCalculator.FindBracketByIncome(income+raise, brackets);
+          if (raiseBracket != null) {
+            result.raiseTaxes = ApplyRateToAmount(raiseBracket.rate, raiseTaxable);
+          }
+        } else {
+          result.raiseTaxes = ApplyRateToAmount(raise, incomeBracket.rate);
         }
-      } else {
-        result.raiseTaxes = ApplyRateToAmount(raise, incomeBraket.rate);
       }
     }
-    result.marginalTaxPayableAmount = Math.Round(result.maxThresholdPayableAmount + result.raiseTaxes, 2);
+
+    result.marginalTaxPayableAmount = Math.Round(result.thresholdPayableAmount + result.raiseTaxes, 2);
     result.income = income;
     result.raise = raise;
 
