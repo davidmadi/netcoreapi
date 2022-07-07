@@ -15,8 +15,8 @@ public class InterviewTestService : TaxService
 
     try{
       //TODO: implement environment variable for dev url and live url
-      //var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
-      var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
+      var url = "http://interview-test-server:5000/tax-calculator/brackets/" + this.year;
+      //var url = "http://localhost:5001/tax-calculator/brackets/" + this.year;
 
       var response = HttpProxy.HttpJsonCall<QueryBracketResponse>(url, url, "interview-test-server");
       if(response?.tax_brackets?.Count() > 0){
